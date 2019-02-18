@@ -6,7 +6,7 @@ use Request;
 use League\Fractal\Resource\NullResource;
 use Illuminate\Support\Str;
 
-trait SmartTransformerTrait
+trait SmartTransformer
 {
     /**
      * Get possible includes

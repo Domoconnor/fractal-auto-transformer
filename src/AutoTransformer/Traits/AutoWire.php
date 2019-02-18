@@ -4,7 +4,7 @@ namespace AutoTransformer\Traits;
 
 use League\Fractal\Resource\NullResource;
 
-trait AutoWireTrait
+trait AutoWire
 {
     /**
      * automatically figure out whether include is collection or item from $data

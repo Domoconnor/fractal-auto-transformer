@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AutoTransformer\Traits;
 
 
