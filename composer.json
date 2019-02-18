@@ -8,11 +8,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Domoconnor\\FractalAutoTransformer\\": "src"
+            "AutoTransformer\\": "src"
         }
     },
     "require": {
         "league/fractal": "0.17.0",
-        "illuminate/support": "5.7.*"
+        "illuminate/support": "5.7.*",
+        "illuminate/database": "5.7.*",
+        "illuminate/http": "5.7.*"
     }
 }
