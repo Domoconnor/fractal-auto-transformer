@@ -16,5 +16,12 @@
         "illuminate/support": "5.7.*",
         "illuminate/database": "5.7.*",
         "illuminate/http": "5.7.*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AutoTransformer\\AutoTransformerServiceProvider"
+            ]
+        }
     }
 }
