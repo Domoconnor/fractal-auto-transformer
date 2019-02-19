@@ -1,6 +1,6 @@
 <?php
 
-namespace AutoTransformer;
+namespace AutoTransformer\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Response;
@@ -65,7 +65,7 @@ class AutoTransformerServiceProvider extends ServiceProvider
                 }
                 $manager = new Manager();
                 $include = request()->has('include') ? request()->get('include') : '';
-                $manager->parseIncludes($include)->setSerializer(new CustomJsonApiSerializer());
+                $manager->parseIncludes($include)->setSerializer(new \Property\Http\Transformers\CustomJsonApiSerializer());
                 $payload = $manager->createData($resource)->toArray();
                 if (config("app.debug", false)) {
                     $payload['info'] = AutoTransformerServiceProvider::debug();
