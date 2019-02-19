@@ -22,6 +22,15 @@ class AutoTransformerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../../../config.php' => config_path('transformer.php'),
+        ]);
+
+        // If we're in debug mode start the query log so we can dump it out as part of the debug helper
+        if (config('app.debug', false)) {
+            DB::enableQueryLog();
+        }
+        
         $fractal = $this->app->make('League\Fractal\Manager');
         response()->macro('item', function ($item, \League\Fractal\TransformerAbstract $transformer, $namespace = null, $status = 200, array $headers = [], $meta = []) use ($fractal) {
             $resource = new Item($item, $transformer, $namespace);
@@ -30,7 +39,6 @@ class AutoTransformerServiceProvider extends ServiceProvider
             }
             $scope = new Scope($fractal, $resource);
             return response()->json(
-            //$fractal->createData($resource)->toArray(),
                 $scope->toArray(),
                 $status,
                 $headers
@@ -47,6 +55,7 @@ class AutoTransformerServiceProvider extends ServiceProvider
                 $headers
             );
         });
+
         Response::macro(
             'jsonApi',
             function ($model, $transformer = null, $type = null, $code = 200, $headers = []) {
@@ -65,7 +74,8 @@ class AutoTransformerServiceProvider extends ServiceProvider
                 }
                 $manager = new Manager();
                 $include = request()->has('include') ? request()->get('include') : '';
-                $manager->parseIncludes($include)->setSerializer(new \Property\Http\Transformers\CustomJsonApiSerializer());
+                $serializer = config('transformer.serializer');
+                $manager->parseIncludes($include)->setSerializer(new $serializer);
                 $payload = $manager->createData($resource)->toArray();
                 if (config("app.debug", false)) {
                     $payload['info'] = AutoTransformerServiceProvider::debug();
